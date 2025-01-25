@@ -10,7 +10,7 @@ public class NPCMovement : MonoBehaviour
 
     private Vector2 movementDirection;
 
-    public int directionMod = 1;
+    private int directionMod = 1;
 
     private double startTime;
 
