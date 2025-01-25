@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class StartGame : MonoBehaviour
 {
@@ -28,5 +29,11 @@ public class StartGame : MonoBehaviour
         startMenu.SetActive(false);
         cutSceneStuff.SetActive(true);
         timeline.Play();
+    }
+
+    public void EndScene()
+    {
+        // SceneManager.LoadScene()
+        Debug.Log("test");
     }
 }

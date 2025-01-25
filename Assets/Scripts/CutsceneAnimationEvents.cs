@@ -1,6 +1,6 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement;
+
 
 public class CutsceneAnimationEvents : MonoBehaviour
 {
@@ -16,9 +16,5 @@ public class CutsceneAnimationEvents : MonoBehaviour
         textCounter++;
     }
 
-    void EndScene()
-    {
-        // SceneManager.LoadScene()
-        print("test");
-    }
+   
 }
