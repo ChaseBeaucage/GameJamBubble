@@ -3,7 +3,7 @@ using UnityEditor;
 
 public class BubbleManager : MonoBehaviour
 {
-    public BubbleType bubbleType ;
+    public BubbleType bubbleType;
 
     public Color redBubble;
     public Color blueBubble;
@@ -14,19 +14,19 @@ public class BubbleManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void OnValidate()
     {
         // SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-        switch(bubbleType)
+        switch (bubbleType)
         {
             case BubbleType.Red:
                 spriteRenderer.color = redBubble;
