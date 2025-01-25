@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class CutsceneAnimationEvents : MonoBehaviour
 {
@@ -13,5 +14,11 @@ public class CutsceneAnimationEvents : MonoBehaviour
     {
         dialogueText.text = textArray[textCounter];
         textCounter++;
+    }
+
+    void EndScene()
+    {
+        // SceneManager.LoadScene()
+        print("test");
     }
 }
