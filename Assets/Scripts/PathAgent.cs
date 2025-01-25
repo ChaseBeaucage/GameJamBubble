@@ -1,94 +1,220 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PathAgent : MonoBehaviour
 {
+    [Header("Path Setup")]
     public PathNode startNode;
-    public PathNode endNode;  // If you specifically want an end
+    public PathNode endNode;  // Optional: BFS from start to end
+
+    [Header("Movement")]
     public float moveSpeed = 5f;
     public float stoppingDistance = 0.2f;
+    public bool loopPath = false; // Whether to loop once we finish
+
+    [Header("Stuck Reset Settings")]
+    [Tooltip("If the agent doesn't reach the next node within this time, we restart the path.")]
+    public float stuckResetTime = 5f;
 
     private Rigidbody2D rb;
     private List<PathNode> path;
     private int currentIndex = 0;
     private bool isPaused = false;
 
+    private float timeSinceLastNode = 0f; // Tracks how long since we last reached a node
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
-        // Optional BFS to get the path from start to end:
-        if (endNode != null)
-        {
-            // Reset the BFS data
-            BFSUtility.ResetNodes(startNode);
-            path = BFSUtility.FindPath(startNode, endNode);
-        }
-        else
-        {
-            // If it’s strictly linear (e.g., from startNode through all connected nodes),
-            // we can manually gather them in sequence. For example:
-            path = new List<PathNode>();
-            PathNode current = startNode;
-            while (current != null && current.connections.Count > 0)
-            {
-                path.Add(current);
-                current = current.connections[0];
-            }
-            // Add the last node if it exists
-            if (current != null) path.Add(current);
-        }
-
-        currentIndex = 0;
+        InitPath();
     }
 
     private void FixedUpdate()
     {
-        if (path == null || path.Count == 0 || isPaused) return;
-        if (currentIndex >= path.Count) return;
+        if (path == null || path.Count == 0 || isPaused)
+            return;
 
-        // Move toward current target node
-        PathNode targetNode = path[currentIndex];
-        Vector2 direction = (targetNode.transform.position - transform.position).normalized;
-        rb.AddForce(direction * moveSpeed);
-
-        // Check distance
-        float dist = Vector2.Distance(transform.position, targetNode.transform.position);
-        if (dist <= stoppingDistance)
+        // Check if we've finished the path
+        if (currentIndex >= path.Count)
         {
-            StartCoroutine(HandlePause(targetNode));
-            currentIndex++;
+            if (loopPath)
+            {
+                // Reverse the path
+                path.Reverse();
+                currentIndex = 0;
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        PathNode targetNode = path[currentIndex];
+        if (targetNode != null)
+        {
+            // Move toward current target node
+            Vector2 direction = (targetNode.transform.position - transform.position).normalized;
+            rb.AddForce(direction * moveSpeed);
+
+            // Check distance
+            float dist = Vector2.Distance(transform.position, targetNode.transform.position);
+            if (dist <= stoppingDistance)
+            {
+                // Reached this node
+                currentIndex++;
+                timeSinceLastNode = 0f; // reset stuck timer
+
+                // Pause logic
+                StartCoroutine(HandlePause(targetNode));
+            }
+            else
+            {
+                // Not reached yet; increment stuck timer
+                timeSinceLastNode += Time.fixedDeltaTime;
+                if (timeSinceLastNode >= stuckResetTime)
+                {
+                    Debug.LogWarning("Agent is stuck! Restarting path...");
+                    RestartPath();
+                }
+            }
         }
     }
 
+    /// <summary>
+    /// Set up the path list, either via BFS (start->end) or linear chain if endNode is null.
+    /// </summary>
+    private void InitPath()
+    {
+        path = new List<PathNode>();
+
+        if (startNode == null)
+        {
+            Debug.LogError("No Start Node assigned to PathAgent!");
+            return;
+        }
+
+        if (endNode != null)
+        {
+            // BFS
+            BFSUtility.ResetNodes(startNode);
+            path = BFSUtility.FindPath(startNode, endNode);
+
+            if (path == null || path.Count == 0)
+            {
+                Debug.LogError("No valid BFS path found from start to end.");
+            }
+        }
+        else
+        {
+            // Linear chain
+            PathNode current = startNode;
+            while (current != null)
+            {
+                path.Add(current);
+                if (current.connections.Count > 0)
+                {
+                    current = current.connections[0];
+                }
+                else
+                {
+                    current = null;
+                }
+            }
+        }
+
+        currentIndex = 0;
+        timeSinceLastNode = 0f;
+        isPaused = false;
+    }
+
+    /// <summary>
+    /// Pauses the agent if it's a TimeBased or EventBased node.
+    /// </summary>
     private IEnumerator HandlePause(PathNode node)
     {
-        // We reached a node. Check if it’s a pause node.
+        // Zero out velocity & angular velocity so we truly stop
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+
+        // If it's a pause node, handle accordingly
         if (node.pauseType == PauseType.TimeBased && node.pauseDuration > 0f)
         {
             isPaused = true;
             yield return new WaitForSeconds(node.pauseDuration);
             isPaused = false;
         }
-        else if (node.pauseType == PauseType.EventBased && !string.IsNullOrEmpty(node.pauseEvent))
+        else if (node.pauseType == PauseType.EventBased)
         {
-            // Example approach:
-            // isPaused = true;
-            // yield return new WaitUntil(() => SomeEventManager.CheckEventTriggered(node.pauseEvent));
-            // isPaused = false;
-            //
-            // Implementation depends on your event system. 
-            // For demonstration, we’ll just do a quick wait:
-            isPaused = true;
-            Debug.Log($"Waiting on event: {node.pauseEvent} (placeholder).");
-            // Placeholder wait:
-            yield return new WaitForSeconds(2f);
-            isPaused = false;
+            // We wait for this node's UnityEvent to be invoked
+            //if (node.nodeEvent != null)
+            //{
+            //    isPaused = true;
+            //    yield return StartCoroutine(WaitForUnityEvent(node.nodeEvent));
+            //    isPaused = false;
+            //}
+            if (node.isTriggered)
+            {
+                isPaused = false;
+            }
+            else
+            {
+                isPaused = true;
+                yield return StartCoroutine(WaitForNodeTrigger(node));
+                isPaused = false;
+            }
         }
-        // else: no pause
 
         yield break;
+    }
+
+    /// <summary>
+    /// Coroutine that yields until the given UnityEvent is invoked.
+    /// </summary>
+    private IEnumerator WaitForUnityEvent(UnityEvent evt)
+    {
+        bool eventTriggered = false;
+
+        // Create a local listener that flips the flag to true
+        UnityAction onEventFired = () => { eventTriggered = true; };
+        evt.AddListener(onEventFired);
+
+        // Wait until eventTriggered is true
+        yield return new WaitUntil(() => eventTriggered);
+
+        // Remove our listener
+        evt.RemoveListener(onEventFired);
+    }
+
+    private IEnumerator WaitForNodeTrigger(PathNode node)
+    {
+        bool eventTriggered = false;
+
+        // Create a local listener that flips the flag to true
+        UnityAction onEventFired = () => { eventTriggered = true; };
+        node.nodeEvent.AddListener(onEventFired);
+
+        // Wait until eventTriggered is true
+        yield return new WaitUntil(() => eventTriggered);
+
+        // Remove our listener
+        node.nodeEvent.RemoveListener(onEventFired);
+    }
+
+    /// <summary>
+    /// Public method to restart the path from the beginning.
+    /// </summary>
+    public void RestartPath()
+    {
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        //inverse the index
+        currentIndex = path.Count - currentIndex;
+        path.Reverse();
+        timeSinceLastNode = 0f;
+        //InitPath();
+        Debug.Log("Path restarted.");
     }
 }

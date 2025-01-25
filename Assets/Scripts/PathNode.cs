@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 public enum PauseType
 {
@@ -10,31 +11,47 @@ public enum PauseType
 
 public class PathNode : MonoBehaviour
 {
-    [Tooltip("A list of connected nodes (if you have branching paths). If it's strictly linear, it will just have 1 next node.")]
+    [Tooltip("Connections to next nodes (can be multiple if you have branching).")]
     public List<PathNode> connections = new List<PathNode>();
 
     [Header("Pause Settings")]
     public PauseType pauseType = PauseType.None;
-    [Tooltip("Pause duration if this node is TimeBased")]
+
+    [Tooltip("Pause duration if this node is TimeBased.")]
     public float pauseDuration = 0f;
-    [Tooltip("Event name or ID if this node is EventBased. (Implementation for event triggers not shown here.)")]
-    public string pauseEvent = "";
 
-    // You can use this to help BFS find which node was visited
+    [Header("Event-Based Pause")]
+    [Tooltip("If pauseType = EventBased, the path agent will wait until this event is invoked.")]
+    public UnityEvent nodeEvent;
+    public bool isTriggered = false;
+
+    // For BFS traversal
     [HideInInspector] public bool visited = false;
-
-    // For optional BFS "parent" reference in path reconstruction
     [HideInInspector] public PathNode parent = null;
+
+    public void ResetNode()
+    {
+        visited = false;
+        parent = null;
+    }
+
+    public void TriggerEvent()
+    {
+        if (!isTriggered) { 
+        isTriggered = true;
+        nodeEvent.Invoke();
+            //pauseType = PauseType.None;
+        }
+    }
 
     private void OnDrawGizmos()
     {
-        // 1) Draw the node
-        //    Increase size if we have a time-based pause; the bigger the pause, the bigger the node radius.
+        // Gizmo logic for visualizing the node in the Editor
         float baseRadius = 0.2f;
         float extraRadius = (pauseType == PauseType.TimeBased) ? pauseDuration * 0.05f : 0f;
         float totalRadius = baseRadius + extraRadius;
 
-        // 2) Color the node differently if it’s a pause node
+        // Color based on pause type
         switch (pauseType)
         {
             case PauseType.TimeBased:
@@ -47,10 +64,9 @@ public class PathNode : MonoBehaviour
                 Gizmos.color = Color.green;
                 break;
         }
-
         Gizmos.DrawSphere(transform.position, totalRadius);
 
-        // 3) Draw lines to each connected node
+        // Draw lines to each connected node
         Gizmos.color = Color.cyan;
         foreach (var conn in connections)
         {

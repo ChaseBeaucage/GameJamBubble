@@ -11,11 +11,24 @@ public class PathFolderEditor : Editor
 
         // We only proceed if this transform is a "folder" with children that have PathNode components
         Transform folder = (Transform)target;
-
-        if (GUILayout.Button("Link Child Nodes in Order"))
+        //search children for PathNode components
+        bool hasPathNodes = false;
+        for (int i = 0; i < folder.childCount; i++)
         {
-            LinkChildrenInOrder(folder);
+            if (folder.GetChild(i).GetComponent<PathNode>() != null)
+            {
+                hasPathNodes = true;
+                break;
+            }
         }
+        if (hasPathNodes)
+        {
+            if (GUILayout.Button("Link Child Nodes in Order"))
+            {
+                LinkChildrenInOrder(folder);
+            }
+        }
+       
     }
 
     private void LinkChildrenInOrder(Transform folder)
