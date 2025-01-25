@@ -7,12 +7,12 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private float movespeed = 0f;
 
     private Rigidbody2D rigidbody;
-
     private Vector2 movementDirection;
 
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+
     }
 
     private void Update()

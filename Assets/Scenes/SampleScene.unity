@@ -767,8 +767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f913a40122719418042ddec9864d65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 55000
-  inverse: 1
+  acceleration: 50000
 --- !u!50 &448289931
 Rigidbody2D:
   serializedVersion: 5
@@ -910,6 +909,7 @@ GameObject:
   - component: {fileID: 507268187}
   - component: {fileID: 507268186}
   - component: {fileID: 507268188}
+  - component: {fileID: 507268189}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -981,7 +981,7 @@ Transform:
   m_GameObject: {fileID: 507268182}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.07, y: -29.89, z: 0}
+  m_LocalPosition: {x: -0.07, y: -28.9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1028,6 +1028,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acceleration: 50000
+  sprint: 1.5
+  movespeed: 0
 --- !u!58 &507268188
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1064,6 +1066,18 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &507268189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507268182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 358129b70fcc15a47886c0d8492b8564, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1656,6 +1670,7 @@ GameObject:
   - component: {fileID: 740319206}
   - component: {fileID: 740319207}
   - component: {fileID: 740319208}
+  - component: {fileID: 740319209}
   m_Layer: 0
   m_Name: PlayerBubble
   m_TagString: Untagged
@@ -1723,7 +1738,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.15566039, g: 0.68768543, b: 1, a: 0.16862746}
+  m_Color: {r: 0.0047169924, g: 0.4512444, b: 1, a: 0.3529412}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1769,6 +1784,23 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.49999997
+--- !u!114 &740319209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740319205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d0e8b39cd97c8a448c08a01d1242cd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bubbleType: 0
+  redBubble: {r: 0.9433962, g: 0.022249907, b: 0.022249907, a: 0.2901961}
+  blueBubble: {r: 0.0047169924, g: 0.4512444, b: 1, a: 0.3529412}
+  greenBubble: {r: 0.19510579, g: 0.8962264, b: 0.12259703, a: 0.31764707}
+  spriteRenderer: {fileID: 740319207}
 --- !u!1 &791846643
 GameObject:
   m_ObjectHideFlags: 0
@@ -1817,8 +1849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f913a40122719418042ddec9864d65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 55000
-  inverse: 1
+  acceleration: 50000
 --- !u!50 &791846646
 Rigidbody2D:
   serializedVersion: 5
@@ -2987,8 +3018,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f913a40122719418042ddec9864d65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 55000
-  inverse: 1
+  acceleration: 50000
 --- !u!50 &1562412506
 Rigidbody2D:
   serializedVersion: 5
@@ -3165,8 +3195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f913a40122719418042ddec9864d65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 55000
-  inverse: 1
+  acceleration: 50000
 --- !u!50 &1663552427
 Rigidbody2D:
   serializedVersion: 5
@@ -3471,8 +3500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3f913a40122719418042ddec9864d65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 55000
-  inverse: 1
+  acceleration: 50000
 --- !u!1 &2000076929
 GameObject:
   m_ObjectHideFlags: 0
