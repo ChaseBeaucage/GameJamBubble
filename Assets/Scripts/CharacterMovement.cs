@@ -27,7 +27,6 @@ public class CharacterMovement : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             movespeed = forceMultiplyer * sprint;
-            Debug.Log("Bitch im running");
         }
         // When clicking and holding mouse2 should enter crouch
         if (Input.GetMouseButton(1))
