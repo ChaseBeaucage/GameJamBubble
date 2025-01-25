@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 public class BubbleInteraction : MonoBehaviour
 {
     SpriteRenderer spriteRenderer;
