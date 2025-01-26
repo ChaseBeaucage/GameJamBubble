@@ -22,7 +22,7 @@ public class PathAgent : MonoBehaviour
     private Rigidbody2D rb;
     private List<PathNode> path;
     private int currentIndex = 0;
-    private bool isWaiting = false;
+    public bool isWaiting = false;
 
     private bool isPausedPathing = false;
 

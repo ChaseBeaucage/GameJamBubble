@@ -7,9 +7,9 @@ public class TextBubbles : MonoBehaviour
     private string farSpeach = "";
     private string closeSpeach = ". . .";
     [TextArea]
-    public string talkingSpeach = "This is me talking wow";
+    public string talkingSpeach = "";
 
-    private bool inRange = false;
+    public bool inRange = false;
     public Collider2D playerBubble;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
