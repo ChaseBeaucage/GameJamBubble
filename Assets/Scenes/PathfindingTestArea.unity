@@ -382,6 +382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connections:
   - {fileID: 1184365262}
+  - {fileID: 1184365262}
   pauseType: 0
   pauseDuration: 0
   nodeEvent:
@@ -436,6 +437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connections:
   - {fileID: 1323501598}
+  - {fileID: 1323501598}
   pauseType: 2
   pauseDuration: 1
   nodeEvent:
@@ -447,6 +449,18 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1651854018}
+        m_TargetAssemblyTypeName: UnityEngine.SpriteRenderer, UnityEngine
+        m_MethodName: set_sprite
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: -1860970055068098351, guid: b5ce96912f72b57438f7b04550faa006, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -940,6 +954,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connections:
+  - {fileID: 299727091}
   - {fileID: 299727091}
   pauseType: 0
   pauseDuration: 0
@@ -2001,11 +2016,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startNode: {fileID: 577403979}
-  endNode: {fileID: 70433963}
   moveSpeed: 52
   stoppingDistance: 0.2
   loopPath: 1
   stuckResetTime: 5
+  isPausedPathing: 0
 --- !u!1 &1889981092
 GameObject:
   m_ObjectHideFlags: 0

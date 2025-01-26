@@ -8,7 +8,7 @@ public class PathAgent : MonoBehaviour
 {
     [Header("Path Setup")]
     public PathNode startNode;
-    public PathNode endNode;  // Optional: BFS from start to end
+    private PathNode endNode;  // Optional: BFS from start to end
 
     [Header("Movement")]
     public float moveSpeed = 5f;
@@ -22,7 +22,9 @@ public class PathAgent : MonoBehaviour
     private Rigidbody2D rb;
     private List<PathNode> path;
     private int currentIndex = 0;
-    private bool isPaused = false;
+    private bool isWaiting = false;
+
+    [SerializeField]private bool isPausedPathing = false;
 
     private float timeSinceLastNode = 0f; // Tracks how long since we last reached a node
 
@@ -34,7 +36,12 @@ public class PathAgent : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (path == null || path.Count == 0 || isPaused)
+        if (isPausedPathing)
+        {
+            return;
+        }
+
+        if (path == null || path.Count == 0 || isWaiting)
             return;
 
         // Check if we've finished the path
@@ -68,7 +75,7 @@ public class PathAgent : MonoBehaviour
                 timeSinceLastNode = 0f; // reset stuck timer
 
                 // Pause logic
-                StartCoroutine(HandlePause(targetNode));
+                StartCoroutine(HandleWait(targetNode));
             }
             else
             {
@@ -76,8 +83,8 @@ public class PathAgent : MonoBehaviour
                 timeSinceLastNode += Time.fixedDeltaTime;
                 if (timeSinceLastNode >= stuckResetTime)
                 {
-                    Debug.LogWarning("Agent is stuck! Restarting path...");
-                    RestartPath();
+                    Debug.LogWarning("Agent is stuck! Turn around...");
+                    TurnAroundOnPath();
                 }
             }
         }
@@ -127,13 +134,13 @@ public class PathAgent : MonoBehaviour
 
         currentIndex = 0;
         timeSinceLastNode = 0f;
-        isPaused = false;
+        isWaiting = false;
     }
 
     /// <summary>
     /// Pauses the agent if it's a TimeBased or EventBased node.
     /// </summary>
-    private IEnumerator HandlePause(PathNode node)
+    private IEnumerator HandleWait(PathNode node)
     {
         // Zero out velocity & angular velocity so we truly stop
         rb.linearVelocity = Vector2.zero;
@@ -142,32 +149,41 @@ public class PathAgent : MonoBehaviour
         // If it's a pause node, handle accordingly
         if (node.pauseType == PauseType.TimeBased && node.pauseDuration > 0f)
         {
-            isPaused = true;
+            isWaiting = true;
             yield return new WaitForSeconds(node.pauseDuration);
-            isPaused = false;
+            isWaiting = false;
         }
         else if (node.pauseType == PauseType.EventBased)
         {
             // We wait for this node's UnityEvent to be invoked
             //if (node.nodeEvent != null)
             //{
-            //    isPaused = true;
+            //    isWaiting = true;
             //    yield return StartCoroutine(WaitForUnityEvent(node.nodeEvent));
-            //    isPaused = false;
+            //    isWaiting = false;
             //}
             if (node.isTriggered)
             {
-                isPaused = false;
+                isWaiting = false;
             }
             else
             {
-                isPaused = true;
+                isWaiting = true;
                 yield return StartCoroutine(WaitForNodeTrigger(node));
-                isPaused = false;
+                isWaiting = false;
             }
         }
 
         yield break;
+    }
+
+    public void PausePathing()
+    {
+        isPausedPathing = true;
+    }
+    public void ResumePathing()
+    {
+        isPausedPathing = false;
     }
 
     /// <summary>
@@ -206,11 +222,11 @@ public class PathAgent : MonoBehaviour
     /// <summary>
     /// Public method to restart the path from the beginning.
     /// </summary>
-    public void RestartPath()
+    public void TurnAroundOnPath()
     {
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
-        //inverse the index
+        //inverse the indexsxc
         currentIndex = path.Count - currentIndex;
         path.Reverse();
         timeSinceLastNode = 0f;

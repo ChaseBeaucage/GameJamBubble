@@ -40,19 +40,19 @@ TagManager:
   - 
   m_SortingLayers:
   - name: Floor
-    uniqueID: 1540380733
+    uniqueID: 4125052325
     locked: 0
-  - name: On floor
-    uniqueID: 1641788129
+  - name: OnFloor
+    uniqueID: 1498608475
     locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Tall Objects
-    uniqueID: 2993565433
+  - name: Player
+    uniqueID: 627674085
     locked: 0
-  - name: Walls
-    uniqueID: 2937191319
+  - name: AbovePlayer
+    uniqueID: 2487512539
     locked: 0
   m_RenderingLayers:
   - Default

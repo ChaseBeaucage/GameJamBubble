@@ -20,11 +20,11 @@ public class BookshelfObj : MonoBehaviour
         {
             //bookshelfEvent.Invoke();
             //bookshelfEvent.AddListener(BookshelfEvent);
-            //if (PathNode != null)
-            //{
-            //    PathNode.nodeEvent.Invoke();
-            //    Debug.Log("PathNode event invoked!");
-            //}
+            if (PathNode != null)
+            {
+                PathNode.TriggerEvent();
+                Debug.Log("PathNode event invoked!");
+            }
             BookshelfEvent();
         }
     }
