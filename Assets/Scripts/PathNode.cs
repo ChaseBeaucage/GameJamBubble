@@ -40,7 +40,8 @@ public class PathNode : MonoBehaviour
         if (!isTriggered) { 
         isTriggered = true;
         nodeEvent.Invoke();
-            //pauseType = PauseType.None;
+        //Change Type to None after event is triggered
+        pauseType = PauseType.None;
         }
     }
 
