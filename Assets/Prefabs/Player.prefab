@@ -139,10 +139,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bubbleType: 0
-  redBubble: {r: 0.9433962, g: 0.022249907, b: 0.022249907, a: 0.2901961}
-  blueBubble: {r: 0.0047169924, g: 0.4512444, b: 1, a: 0.3529412}
-  greenBubble: {r: 0.19510579, g: 0.8962264, b: 0.12259703, a: 0.31764707}
+  bubbleTypeSO: {fileID: 0}
   spriteRenderer: {fileID: 5335464679809170670}
+  circleCollider2D: {fileID: 0}
 --- !u!114 &4650665968773899767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,7 +172,6 @@ GameObject:
   - component: {fileID: 1885652251818475429}
   - component: {fileID: 1634565111569745120}
   - component: {fileID: 5098404660809322604}
-  - component: {fileID: 2872901188079346679}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -331,15 +329,3 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!114 &2872901188079346679
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1431471366661584749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 358129b70fcc15a47886c0d8492b8564, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

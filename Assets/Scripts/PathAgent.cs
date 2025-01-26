@@ -22,9 +22,9 @@ public class PathAgent : MonoBehaviour
     private Rigidbody2D rb;
     private List<PathNode> path;
     private int currentIndex = 0;
-    private bool isWaiting = false;
+    public bool isWaiting = false;
 
-    [SerializeField]private bool isPausedPathing = false;
+    public bool isPausedPathing = false;
 
     private float timeSinceLastNode = 0f; // Tracks how long since we last reached a node
 

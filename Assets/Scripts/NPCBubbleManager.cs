@@ -6,10 +6,11 @@ public class NPCBubbleManager : MonoBehaviour
     public float gravityStrength = 10f;
     [Tooltip("Max cap on the gravitational force (optional).")]
     public float maxGravityForce = 50f;
-
     private Rigidbody2D parentRb;
     [SerializeField] private BubbleTypeSetter bubbleTypeSetter;
     [SerializeField] private PathAgent pathAgent;
+
+    public bool Event = false;
 
     private bool isAttracted = false;
     // Holds reference to player only when in bubble
@@ -18,6 +19,9 @@ public class NPCBubbleManager : MonoBehaviour
     private BubbleType bubbleType;
     private Transform parent;
 
+    public Vector3 standard = new Vector3(0, 0, 0);
+    public Vector3 crouching = new Vector3(0, 0, 0);
+
     private void Awake()
     {
         bubbleTypeSetter = GetComponent<BubbleTypeSetter>();
@@ -25,6 +29,27 @@ public class NPCBubbleManager : MonoBehaviour
         pathAgent = transform.parent.GetComponent<PathAgent>();
         parent = transform.parent;
         parentRb = parent.GetComponent<Rigidbody2D>();
+    }
+
+
+    public void Update()
+    {
+        if (Event)
+        {
+            isAttracted = false;
+            bubbleType = BubbleType.Blue;
+            transform.localScale = crouching;
+        }
+        if (!Event)
+        {
+            isAttracted = true;
+            bubbleType = BubbleType.Red;
+            transform.localScale = standard;
+        }
+    }
+    public void BookEventToggle()
+    {
+        Event = !Event;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
