@@ -27,6 +27,7 @@ public class StartGame : MonoBehaviour
     public void OnStartPress()
     {
         startMenu.SetActive(false);
+        startMenu.GetComponent<AudioSource>().Stop();
         cutSceneStuff.SetActive(true);
         timeline.Play();
     }
