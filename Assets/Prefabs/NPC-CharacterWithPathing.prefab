@@ -228,7 +228,6 @@ MonoBehaviour:
   stoppingDistance: 0.2
   loopPath: 1
   stuckResetTime: 5
-  isPausedPathing: 0
 --- !u!212 &6450824661028507173
 SpriteRenderer:
   m_ObjectHideFlags: 0

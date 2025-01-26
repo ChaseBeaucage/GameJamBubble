@@ -19,7 +19,7 @@ public class BubbleTypeSetter : MonoBehaviour
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
-        if(circleCollider2D == null)
+        if (circleCollider2D == null)
         {
             circleCollider2D = GetComponent<CircleCollider2D>();
         }
@@ -32,11 +32,11 @@ public class BubbleTypeSetter : MonoBehaviour
         }
     }
 
-    
 
-    void OnValidate()
+
+    public void OnValidate()
     {
-        
+
         if (bubbleTypeSO != null && spriteRenderer != null)
         {
             spriteRenderer.color = bubbleTypeSO.GetColor(bubbleType);
