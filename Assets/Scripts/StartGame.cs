@@ -27,13 +27,13 @@ public class StartGame : MonoBehaviour
     public void OnStartPress()
     {
         startMenu.SetActive(false);
+        startMenu.GetComponent<AudioSource>().Stop();
         cutSceneStuff.SetActive(true);
         timeline.Play();
     }
 
     public void EndScene()
     {
-        // SceneManager.LoadScene()
-        Debug.Log("test");
+        SceneManager.LoadScene("Library");
     }
 }

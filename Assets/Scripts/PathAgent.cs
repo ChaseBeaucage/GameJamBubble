@@ -24,7 +24,7 @@ public class PathAgent : MonoBehaviour
     private int currentIndex = 0;
     public bool isWaiting = false;
 
-    public bool isPausedPathing = false;
+    private bool isPausedPathing = false;
 
     private float timeSinceLastNode = 0f; // Tracks how long since we last reached a node
 

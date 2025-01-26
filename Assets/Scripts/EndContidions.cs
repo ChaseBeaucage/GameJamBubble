@@ -5,9 +5,6 @@ public class EndContidions : MonoBehaviour
 {
     public Collider2D playersColl;
     public GameObject letter;
-
-    public bool win = false;
-
     private bool inRange = false;
 
     private void Start()
@@ -21,14 +18,13 @@ public class EndContidions : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && inRange)
         {
             Debug.Log("You Win");
-            win = true;
-            SceneManager.LoadScene("EndState");
+            SceneManager.LoadScene("WinScene");
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other == letter.GetComponent<Collider2D>())
+        if (other.gameObject.name == "WinningLetter")
         {
             inRange = true;
         }
