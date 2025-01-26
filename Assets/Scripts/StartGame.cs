@@ -33,7 +33,6 @@ public class StartGame : MonoBehaviour
 
     public void EndScene()
     {
-        // SceneManager.LoadScene()
-        Debug.Log("test");
+        SceneManager.LoadScene("Library");
     }
 }
