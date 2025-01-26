@@ -12,7 +12,8 @@ public class NPCBubbleManager : MonoBehaviour
     [SerializeField] private PathAgent pathAgent;
 
     private bool isAttracted = false;
-    private Transform playerTransform;
+    // Holds reference to player only when in bubble
+    private Transform playerBubbleTransform;
 
     private BubbleType bubbleType;
     private Transform parent;
@@ -28,7 +29,6 @@ public class NPCBubbleManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
         if (collision.gameObject.TryGetComponent<BubbleTypeSetter>(out BubbleTypeSetter bubbleTypeSetter))
         {
             if (collision.gameObject.TryGetComponent<NPCBubbleManager>(out NPCBubbleManager npcBubbleManager))
@@ -45,10 +45,10 @@ public class NPCBubbleManager : MonoBehaviour
                     {
                         pathAgent.PausePathing();
                     }
-                    playerTransform = collision.transform;
+                    playerBubbleTransform = collision.transform;
                     isAttracted = true;
                 }
-            
+
             }
         }
     }
@@ -70,7 +70,7 @@ public class NPCBubbleManager : MonoBehaviour
                     {
                         pathAgent.ResumePathing();
                     }
-                    playerTransform = null;
+                    playerBubbleTransform = null;
                     isAttracted = false;
                 }
             }
@@ -79,9 +79,9 @@ public class NPCBubbleManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isAttracted && playerTransform != null)
+        if (isAttracted && playerBubbleTransform != null)
         {
-            ApplyGravitationalPull(playerTransform);
+            ApplyGravitationalPull(playerBubbleTransform);
         }
     }
 
