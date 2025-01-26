@@ -5,7 +5,6 @@ public class EndContidions : MonoBehaviour
 {
     public Collider2D playersColl;
     public GameObject letter;
-
     private bool inRange = false;
 
     private void Start()
@@ -19,13 +18,13 @@ public class EndContidions : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && inRange)
         {
             Debug.Log("You Win");
-            SceneManager.LoadScene("EndState");
+            SceneManager.LoadScene("WinScene");
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other == letter.GetComponent<Collider2D>())
+        if (other.gameObject.name == "WinningLetter")
         {
             inRange = true;
         }
@@ -39,7 +38,7 @@ public class EndContidions : MonoBehaviour
     // Collide with red bubbled npc body
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.name.Contains("NPC"))
+        if (other.gameObject.GetComponent<PathAgent>() && other.gameObject.GetComponentInChildren<BubbleTypeSetter>().bubbleType == BubbleType.Red)
         {
             Debug.Log("You Lose");
             SceneManager.LoadScene("EndState");
