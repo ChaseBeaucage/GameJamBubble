@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      bathroom tile_0: -122203715504831461
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
