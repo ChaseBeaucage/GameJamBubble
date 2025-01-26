@@ -10,7 +10,8 @@ public class TextBubbles : MonoBehaviour
     public string talkingSpeach = "";
 
     public bool inRange = false;
-    public Collider2D playerBubble;
+    [SerializeField] private BoxCollider2D triggerArea;
+    //public Collider2D playerBubble;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,24 +19,26 @@ public class TextBubbles : MonoBehaviour
 
     }
 
-    // Update is called once per frame
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other == playerBubble)
-        {
-            inRange = true;
-            textToPrint.text = closeSpeach;
-        }
+        //GameObject player = oth
+        //other.TryGetComponent<CharacterMovement>(out CharacterMovement characterMovement)
+        //if ()
+        //{
+        //    inRange = true;
+        //    textToPrint.text = closeSpeach;
+        //}
 
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other == playerBubble)
-        {
-            inRange = false;
-            textToPrint.text = farSpeach;
-        }
+        //if (other.TryGetComponent<CharacterMovement>(out CharacterMovement characterMovement))
+        //{
+        //    inRange = false;
+        //    textToPrint.text = farSpeach;
+        //}
 
     }
 

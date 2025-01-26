@@ -6,13 +6,13 @@ public class BubbleTypeSO : ScriptableObject
     [System.Serializable]
     public struct BubbleColorEntry
     {
-        public BubbleType type;
+        public BubbleTypeEnum type;
         public Color color;
     }
 
     public BubbleColorEntry[] bubbleColors;
 
-    public Color GetColor(BubbleType type)
+    public Color GetColor(BubbleTypeEnum type)
     {
         foreach (var entry in bubbleColors)
         {

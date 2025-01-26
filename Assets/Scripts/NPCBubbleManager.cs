@@ -10,13 +10,14 @@ public class NPCBubbleManager : MonoBehaviour
     [SerializeField] private BubbleTypeSetter bubbleTypeSetter;
     [SerializeField] private PathAgent pathAgent;
 
-    public bool Event = false;
+    public bool hasBookEventTriggered = false;
 
     private bool isAttracted = false;
     // Holds reference to player only when in bubble
     private Transform playerBubbleTransform;
 
-    private BubbleType bubbleType;
+    private BubbleTypeEnum bubbleType;
+    private BubbleSize bubbleSize;
     private Transform parent;
 
     public Vector3 standard = new Vector3(0, 0, 0);
@@ -25,7 +26,8 @@ public class NPCBubbleManager : MonoBehaviour
     private void Awake()
     {
         bubbleTypeSetter = GetComponent<BubbleTypeSetter>();
-        bubbleType = bubbleTypeSetter.bubbleType;
+        bubbleType = bubbleTypeSetter.BubbleType;
+        bubbleSize = bubbleTypeSetter.BubbleSize;
         pathAgent = transform.parent.GetComponent<PathAgent>();
         parent = transform.parent;
         parentRb = parent.GetComponent<Rigidbody2D>();
@@ -34,22 +36,46 @@ public class NPCBubbleManager : MonoBehaviour
 
     public void Update()
     {
-        if (Event)
-        {
-            isAttracted = false;
-            bubbleType = BubbleType.Blue;
-            transform.localScale = crouching;
-        }
-        if (!Event)
-        {
-            isAttracted = true;
-            bubbleType = BubbleType.Red;
-            transform.localScale = standard;
-        }
+        //if (hasBookEventTriggered)
+        //{
+        //    isAttracted = false;
+        //    bubbleType = BubbleTypeEnum.Blue;
+        //    bubbleSize = BubbleSize.Small;
+        //    //transform.localScale = crouching;
+        //}
+        //if (!hasBookEventTriggered)
+        //{
+        //    isAttracted = true;
+        //    bubbleType = BubbleTypeEnum.Red;
+        //    bubbleSize = BubbleSize.Large;
+        //    //transform.localScale = standard;
+        //}
     }
     public void BookEventToggle()
     {
-        Event = !Event;
+        hasBookEventTriggered = !hasBookEventTriggered;
+
+        if (hasBookEventTriggered)
+        {
+            isAttracted = false;
+            bubbleType = BubbleTypeEnum.Blue;
+            bubbleSize = BubbleSize.Small;
+        }
+        if (!hasBookEventTriggered)
+        {
+            isAttracted = true;
+            bubbleType = BubbleTypeEnum.Red;
+            bubbleSize = BubbleSize.Large;
+        }
+    }
+
+    public void SetBubbleType(BubbleTypeEnum bubbleType)
+    {
+        this.bubbleType = bubbleType;
+    }
+    public void SetBubbleSize(BubbleSize bubbleSize)
+    {
+        this.bubbleSize = bubbleSize;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -63,7 +89,7 @@ public class NPCBubbleManager : MonoBehaviour
             else
             {
                 Debug.Log("NPC bubble collided with player bubble");
-                if (bubbleTypeSetter.bubbleType == BubbleType.Blue && bubbleType == BubbleType.Red)
+                if (bubbleTypeSetter.BubbleType == BubbleTypeEnum.Blue && bubbleType == BubbleTypeEnum.Red)
                 {
                     //Get the PathAgent component from the parent
                     if (pathAgent != null)
@@ -89,7 +115,7 @@ public class NPCBubbleManager : MonoBehaviour
             else
             {
                 Debug.Log("NPC bubble exited player bubble");
-                if (bubbleTypeSetter.bubbleType == BubbleType.Blue && bubbleType == BubbleType.Red)
+                if (bubbleTypeSetter.BubbleType == BubbleTypeEnum.Blue && bubbleType == BubbleTypeEnum.Red)
                 {
                     if (pathAgent != null)
                     {

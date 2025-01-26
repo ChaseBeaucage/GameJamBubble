@@ -20,7 +20,7 @@ public class PathNode : MonoBehaviour
     [Tooltip("Pause duration if this node is TimeBased.")]
     public float pauseDuration = 0f;
 
-    [Header("Event-Based Pause")]
+    [Header("hasBookEventTriggered-Based Pause")]
     [Tooltip("If pauseType = EventBased, the path agent will wait until this event is invoked.")]
     public UnityEvent nodeEvent;
     public bool isTriggered = false;
