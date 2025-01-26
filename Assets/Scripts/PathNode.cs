@@ -37,11 +37,13 @@ public class PathNode : MonoBehaviour
 
     public void TriggerEvent()
     {
-        if (!isTriggered) { 
-        isTriggered = true;
-        nodeEvent.Invoke();
-        //Change Type to None after event is triggered
-        pauseType = PauseType.None;
+        if (!isTriggered)
+        {
+            isTriggered = true;
+            nodeEvent.Invoke();
+            isTriggered = false;
+            //Change Type to None after event is triggered
+            //pauseType = PauseType.None;
         }
     }
 
