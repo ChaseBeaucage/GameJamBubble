@@ -7,6 +7,7 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private float sprintMultiplier = 1.5f;
     [SerializeField] private float crouchMultiplier = 0.5f;
     [SerializeField] private float baseMoveSpeed = 1f;
+    [SerializeField] float maxMoveSpeed;
 
     [Header("Force Settings")]
     [SerializeField] private float forceMultiplier = 300f;
@@ -63,5 +64,7 @@ public class CharacterMovement : MonoBehaviour
             // 3. If no movement input, increase drag to slow down quickly.
             rb.linearDamping = idleDrag;
         }
+
+        rb.linearVelocity = new Vector2(Mathf.Clamp(rb.linearVelocity.x, -maxMoveSpeed, maxMoveSpeed), Mathf.Clamp(rb.linearVelocity.y, -maxMoveSpeed, maxMoveSpeed));
     }
 }

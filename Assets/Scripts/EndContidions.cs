@@ -38,7 +38,7 @@ public class EndContidions : MonoBehaviour
     // Collide with red bubbled npc body
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.GetComponent<PathAgent>() && other.gameObject.GetComponentInChildren<BubbleTypeSetter>().bubbleType == BubbleType.Red)
+        if (other.gameObject.GetComponent<PathAgent>() && other.gameObject.GetComponentInChildren<BubbleTypeSetter>().BubbleType == BubbleTypeEnum.Red)
         {
             Debug.Log("You Lose");
             SceneManager.LoadScene("EndState");
