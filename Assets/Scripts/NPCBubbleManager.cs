@@ -3,7 +3,7 @@ using UnityEngine;
 public class NPCBubbleManager : MonoBehaviour
 {
     [Tooltip("Strength of gravitational pull toward the Player when bubbles overlap.")]
-    public float gravityStrength = 10f;
+    public float gravityStrength = 11f;
     [Tooltip("Max cap on the gravitational force (optional).")]
     public float maxGravityForce = 50f;
     private Rigidbody2D parentRb;
@@ -31,6 +31,8 @@ public class NPCBubbleManager : MonoBehaviour
         pathAgent = transform.parent.GetComponent<PathAgent>();
         parent = transform.parent;
         parentRb = parent.GetComponent<Rigidbody2D>();
+        gravityStrength = 5f;
+        maxGravityForce = 40f;
     }
 
 

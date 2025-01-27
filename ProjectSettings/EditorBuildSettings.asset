@@ -15,20 +15,20 @@ EditorBuildSettings:
     path: Assets/Scenes/EndState.unity
     guid: 21d0eee53dafa264e943a626ff9104cc
   - enabled: 1
-    path: Assets/Scenes/MovementTestArea.unity
-    guid: d9e7468366fd8174e980015daa3f6f5d
-  - enabled: 1
-    path: Assets/Scenes/PathfindingTestArea.unity
-    guid: 6289ed857709173438574afbb2cad3e0
-  - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
-    path: Assets/Scenes/Library.unity
-    guid: 39f52a24bed0e2f489dcb80dc5deca99
-  - enabled: 1
     path: Assets/Scenes/WinScene.unity
     guid: 1e8f7c02238b4cb4eb7cbc28a4f552d6
+  - enabled: 0
+    path: Assets/Scenes/MovementTestArea.unity
+    guid: d9e7468366fd8174e980015daa3f6f5d
+  - enabled: 0
+    path: Assets/Scenes/PathfindingTestArea.unity
+    guid: 6289ed857709173438574afbb2cad3e0
+  - enabled: 0
+    path: Assets/Scenes/SampleScene.unity
+    guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 0
+    path: Assets/Scenes/Library.unity
+    guid: 39f52a24bed0e2f489dcb80dc5deca99
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -22,7 +22,7 @@ public class EndContidions : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.name == "WinningLetter")
         {
@@ -42,7 +42,7 @@ public class EndContidions : MonoBehaviour
         {
             Debug.Log("You Lose");
             SceneManager.LoadScene("EndState");
-        }
+       }
     }
 
 }
