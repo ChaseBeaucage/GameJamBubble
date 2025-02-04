@@ -10,8 +10,7 @@ public class TextBubbles : MonoBehaviour
     public string talkingSpeach = "";
 
     public bool inRange = false;
-    [SerializeField] private BoxCollider2D triggerArea;
-    //public Collider2D playerBubble;
+    [SerializeField] Collider2D triggerArea;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,26 +21,22 @@ public class TextBubbles : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //GameObject player = oth
-        //other.TryGetComponent<CharacterMovement>(out CharacterMovement characterMovement)
-        //if ()
-        //{
-        //    inRange = true;
-        //    textToPrint.text = closeSpeach;
-        //}
+        if (other.GetComponent<Collider2D>() == triggerArea)
+        {
+            inRange = true;
+            textToPrint.text = closeSpeach;
+        }
 
     }
-
     private void OnTriggerExit2D(Collider2D other)
     {
-        //if (other.TryGetComponent<CharacterMovement>(out CharacterMovement characterMovement))
-        //{
-        //    inRange = false;
-        //    textToPrint.text = farSpeach;
-        //}
+        if (other.GetComponent<Collider2D>() == triggerArea)
+        {
+            inRange = false;
+            textToPrint.text = farSpeach;
+        }
 
     }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && inRange)
